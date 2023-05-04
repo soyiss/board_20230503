@@ -47,9 +47,12 @@ public class BoardController {
 
 
     // /board?id=1
+    //주소가 /board인데 위에 묶어줘서 안써도됨
     @GetMapping
     public String findById(@RequestParam("id") Long id, Model model) {
+        //조회수를 1씩 증가시키는 메소드이다
         boardService.updateHits(id);
+
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         return "boardPages/boardDetail";
@@ -65,10 +68,29 @@ public class BoardController {
     @PostMapping("/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         boardService.update(boardDTO);
+
+        //수정된 내용의 id를 findById메소드에 매개변수로 보낸후 dto변수에 담아옴
         BoardDTO dto = boardService.findById(boardDTO.getId());
         model.addAttribute("board", dto);
+
+        //resirect로 요청하면 수정한건데 조회수가 올라가니까 밑에 리턴처럼 해줘야됌
 //        return "redirect:/board?id="+boardDTO.getId();
+
+        //수정한 객체를 다시 모델에 담아가서 detail.jsp에 뿌려준다
         return "boardPages/boardDetail";
     }
 
+    @GetMapping("/delete")
+    public String deleteForm(@RequestParam("id") Long id, Model model){
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardPages/deleteCheck";
+    }
+
+    @PostMapping("/")
+    public String delete(@RequestParam("boardPass") String boardPass){
+        boardService.delete(boardPass);
+        return "redirect:/board/";
+
+    }
 }

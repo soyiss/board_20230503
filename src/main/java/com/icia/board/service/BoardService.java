@@ -33,4 +33,8 @@ public class BoardService {
     public void update(BoardDTO boardDTO) {
         boardRepository.update(boardDTO);
     }
+
+    public void delete(String boardPass) {
+        boardRepository.delete(boardPass);
+    }
 }

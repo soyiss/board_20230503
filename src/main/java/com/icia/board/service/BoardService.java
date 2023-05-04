@@ -34,7 +34,7 @@ public class BoardService {
         boardRepository.update(boardDTO);
     }
 
-    public void delete(String boardPass) {
-        boardRepository.delete(boardPass);
+    public void delete(Long id) {
+        boardRepository.delete(id);
     }
 }

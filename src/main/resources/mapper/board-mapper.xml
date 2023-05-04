@@ -27,7 +27,7 @@
         where id=#{id}
     </update>
 
-    <delete id="delete" parameterType="String">
-        delete from board_table where boardPass = #{boardPass}
+    <delete id="delete" parameterType="Long">
+        delete from board_table where id=#{id}
     </delete>
 </mapper>

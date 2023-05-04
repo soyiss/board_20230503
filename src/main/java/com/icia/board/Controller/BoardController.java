@@ -80,17 +80,16 @@ public class BoardController {
         return "boardPages/boardDetail";
     }
 
-    @GetMapping("/delete")
-    public String deleteForm(@RequestParam("id") Long id, Model model){
+    @GetMapping("/delete-check")
+    public String deleteCheck(@RequestParam("id") Long id, Model model) {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         return "boardPages/deleteCheck";
     }
 
-    @PostMapping("/")
-    public String delete(@RequestParam("boardPass") String boardPass){
-        boardService.delete(boardPass);
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") Long id) {
+        boardService.delete(id);
         return "redirect:/board/";
-
     }
 }

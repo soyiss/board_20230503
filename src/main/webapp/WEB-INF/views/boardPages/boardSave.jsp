@@ -18,12 +18,15 @@
 
 
 <div id="section">
-    <form action="/board/save" method="post">
+<%--  enctype="multipart/form-data" 이속성이 반드시 있어야만 파일이 전달될 수 있다   --%>
+    <form action="/board/save" method="post" enctype="multipart/form-data">
 
         <input type="text" name="boardTitle" placeholder="글 제목을 입력하세요"><br>
         <input type="text" name="boardWriter" placeholder="작성자"><br>
         <input type="text" name="boardPass" placeholder="글 비밀번호"><br>
         <textarea type="text" name="boardContents" cols="30" rows="10" placeholder="글 내용을 입력하세요"></textarea><br>
+<%--   파일 첨부를 위한 인풋( 파일 자체가 네임에 저장되서 전달됨)    --%>
+        <input type="file" name="boardFile"><br>
         <input type="submit" value="작성">
     </form>
 </div>

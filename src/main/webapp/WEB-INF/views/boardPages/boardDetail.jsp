@@ -46,6 +46,18 @@
             <th>contents</th>
             <td>${board.boardContents}</td>
         </tr>
+
+<%--    첨부된 파일이있으면 목록에 이미지가 뜨게하공 없으면 아에 이미지 칸 자체가 안보이게 하기    --%>
+        <c:if test="${board.fileAttached == 1}">
+        <tr>
+            <th>image</th>
+            <td>
+<%--    ${pageContext.request.contextPath}는 현재 프로젝트의 경로에 접근한다(그냥 기본적으로 써주는 식이다)            --%>
+
+                <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}" alt="">
+            </td>
+        </tr>
+        </c:if>
     </table>
     <button onclick="board_list()">목록</button>
     <button onclick="board_update()">수정</button>

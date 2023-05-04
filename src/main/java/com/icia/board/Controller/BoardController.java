@@ -1,6 +1,7 @@
 package com.icia.board.Controller;
 
 import com.icia.board.dto.BoardDTO;
+import com.icia.board.dto.BoardFileDTO;
 import com.icia.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,8 @@ public class BoardController {
 
     //    @PostMapping("/board/save")
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) {
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+        System.out.println("boardDTO =" + boardDTO);
         boardService.save(boardDTO);
         return "redirect:/board/";
     }
@@ -52,10 +55,17 @@ public class BoardController {
     public String findById(@RequestParam("id") Long id, Model model) {
         //조회수를 1씩 증가시키는 메소드이다
         boardService.updateHits(id);
-
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
-        return "boardPages/boardDetail";
+        if(boardDTO.getFileAttached() == 1){
+            // 파일이 있는 게시글을 선택하면
+            BoardFileDTO boardFileDTO = boardService.findFile(id);
+            model.addAttribute("boardFile", boardFileDTO);
+            System.out.println("boardFileDTO = " + boardFileDTO);
+        }
+            return "boardPages/boardDetail";
+
+
     }
 
     @GetMapping("/update")

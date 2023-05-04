@@ -56,7 +56,8 @@ public class BoardRepository {
         sql.insert("Board.saveFile",boardFileDTO);
     }
 
-    public BoardFileDTO findFile(Long boardId) {
-        return sql.selectOne("Board.findFile", boardId);
+    public List<BoardFileDTO> findFile(Long boardId) {
+        //하나의 게시글에 첨부파일이 여러개니까 LIst로 받아줌
+        return sql.selectList("Board.findFile", boardId);
     }
 }

@@ -2,7 +2,9 @@ package com.icia.board.Controller;
 
 import com.icia.board.dto.BoardDTO;
 import com.icia.board.dto.BoardFileDTO;
+import com.icia.board.dto.CommentDTO;
 import com.icia.board.service.BoardService;
+import com.icia.board.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @Autowired
+    private CommentService commentService;
 
     //    @GetMapping("/board/save")
     @GetMapping("/save")
@@ -62,6 +66,16 @@ public class BoardController {
             List<BoardFileDTO> boardFileDTO = boardService.findFile(id);
             model.addAttribute("boardFileList", boardFileDTO);
             System.out.println("boardFileDTO = " + boardFileDTO);
+        }
+        //댓글을 가져와야됨
+        //매개변수의 id는 게시글의 id이다
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        if(commentDTOList.size() == 0){
+            //댓글이 없으면 list에 null적용
+            model.addAttribute("commentList", null);
+        }else{
+            //댓글이 있으면 서버에서 가져온 commentDTOList를 넘겨준다
+            model.addAttribute("commentList", commentDTOList);
         }
             return "boardPages/boardDetail";
 

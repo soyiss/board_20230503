@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardRepository {
@@ -59,5 +60,17 @@ public class BoardRepository {
     public List<BoardFileDTO> findFile(Long boardId) {
         //하나의 게시글에 첨부파일이 여러개니까 LIst로 받아줌
         return sql.selectList("Board.findFile", boardId);
+    }
+
+    public List<BoardDTO> pagingList(Map<String, Integer> pagingParams) {
+        return sql.selectList("Board.paging", pagingParams);
+
+
+
+    }
+
+    public int boardCount() {
+        return sql.selectOne("Board.count");
+
     }
 }
